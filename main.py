@@ -23,7 +23,7 @@ while word != '0':
                 output = 'Word not found. Try again.'
         else:
             output = 'Word not found. Try again.'
-    if isinstance(output, list):
+    if output.type == list:
         for definition in output:
             print(definition)
     else:
