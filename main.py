@@ -2,27 +2,30 @@ import json
 from difflib import get_close_matches as close_matches
 
 print('Welcome to the English Dictionary Python Program')
-print('Enter a blank at any time to quit the program')
+print('Enter "0" at any time to quit the program')
 
 word, data = ' ', json.load(open('data.json', 'r'))
-while word != '':
+while word != '0':
     word = input('Enter word: ').lower()
-    if word == '':
+    if word == '0':
         pass
     elif word in data:
-        print(str(data[word]))
+        output = data[word]
     elif word not in data:
         autocorrect = close_matches(word, data.keys())
         if autocorrect:
             for suggestion in autocorrect:
                 corrected_word = input(f'Did you mean "{suggestion}"? (y/n): ')
                 if corrected_word == 'y':
-                    print(str(data[suggestion]))
+                    output = data[suggestion]
                     break
             else:
-                print('Word not found. Try again.')
-
+                output = 'Word not found. Try again.'
         else:
-            print('Word not found. Try again.')
-
+            output = 'Word not found. Try again.'
+    if isinstance(output, list):
+        for definition in output:
+            print(definition)
+    else:
+        print(output)
 print("Goodbye")
